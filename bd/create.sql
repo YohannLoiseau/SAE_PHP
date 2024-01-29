@@ -1,50 +1,43 @@
-CREATE TABLE ALBUM (
-  PRIMARY KEY (idAlbum),
-  idAlbum      int(5) NOT NULL,
-  titre        VARCHAR(42),
-  image        VARCHAR(42),     -- todo : type
-  annee        YEAR,
-  idBy int(5) NOT NULL,
-  idParent int(5) NOT NULL
+CREATE TABLE IF NOT EXISTS MUSICIEN (
+    nomMusicien VARCHAR(42) NOT NULL PRIMARY KEY
 );
 
-CREATE TABLE APPARTENIR (
-  PRIMARY KEY (idGenre, idAlbum),
-  idGenre int(5) NOT NULL,
-  idAlbum int(5) NOT NULL
+CREATE TABLE IF NOT EXISTS GENRE (
+    nomGenre VARCHAR(42) NOT NULL PRIMARY KEY
 );
 
-CREATE TABLE APPRECIER (
-  PRIMARY KEY (idUtilisateur, idAlbum),
-  idUtilisateur   int(5) NOT NULL,
-  idAlbum         int(5) NOT NULL,
-  note            int(1),
-  estDansPlaylist boolean
+CREATE TABLE IF NOT EXISTS UTILISATEUR (
+    idUtilisateur  int(5) NOT NULL PRIMARY KEY,
+    nomUtilisateur VARCHAR(42),
+    mdp VARCHAR(42)
 );
 
-CREATE TABLE GENRE (
-  PRIMARY KEY (idGenre),
-  idGenre  int(5) NOT NULL,
-  nomGenre VARCHAR(42)
+CREATE TABLE IF NOT EXISTS ALBUM (
+    idAlbum      int(5) NOT NULL PRIMARY KEY,
+    titre        VARCHAR(42),
+    image        VARCHAR(100),
+    annee        YEAR,
+    musicienBy VARCHAR(42) NOT NULL,
+    musicienParent VARCHAR(42) NOT NULL,
+    roleParent VARCHAR(42),
+    FOREIGN KEY (musicienBy) REFERENCES MUSICIEN (nomMusicien),
+    FOREIGN KEY (musicienParent) REFERENCES MUSICIEN (nomMusicien)
 );
 
-CREATE TABLE MUSICIEN (
-  PRIMARY KEY (idMusicien),
-  idMusicien  int(5) NOT NULL,
-  nomMusicien VARCHAR(42)
+CREATE TABLE IF NOT EXISTS APPARTENIR (
+    nomGenre VARCHAR(42) NOT NULL,
+    idAlbum int(5) NOT NULL,
+    PRIMARY KEY (nomGenre, idAlbum),
+    FOREIGN KEY (idAlbum) REFERENCES ALBUM (idAlbum),
+    FOREIGN KEY (nomGenre) REFERENCES GENRE (nomGenre)
 );
 
-CREATE TABLE UTILISATEUR (
-  PRIMARY KEY (idUtilisateur),
-  idUtilisateur  int(5) NOT NULL,
-  nomUtilisateur VARCHAR(42)
+CREATE TABLE IF NOT EXISTS APPRECIER (
+    idUtilisateur   int(5) NOT NULL,
+    idAlbum         int(5) NOT NULL,
+    note            int(1),
+    estDansPlaylist boolean,
+    PRIMARY KEY (idUtilisateur, idAlbum),
+    FOREIGN KEY (idAlbum) REFERENCES ALBUM (idAlbum),
+    FOREIGN KEY (idUtilisateur) REFERENCES UTILISATEUR (idUtilisateur)
 );
-
-ALTER TABLE ALBUM ADD FOREIGN KEY (idBy) REFERENCES MUSICIEN (idMusicien);
-ALTER TABLE ALBUM ADD FOREIGN KEY (idParent) REFERENCES MUSICIEN (idMusicien);
-
-ALTER TABLE APPARTENIR ADD FOREIGN KEY (idAlbum) REFERENCES ALBUM (idAlbum);
-ALTER TABLE APPARTENIR ADD FOREIGN KEY (idGenre) REFERENCES GENRE (idGenre);
-
-ALTER TABLE APPRECIER ADD FOREIGN KEY (idAlbum) REFERENCES ALBUM (idAlbum);
-ALTER TABLE APPRECIER ADD FOREIGN KEY (idUtilisateur) REFERENCES UTILISATEUR (idUtilisateur);
