@@ -1,6 +1,7 @@
 <?php
 
 namespace src\Model;
+use \PDO;
 
 class Album{
 
@@ -14,28 +15,49 @@ class Album{
 
     public ?string $roleParent;
 
-    public ?array $genres;
-
     public Musicien $chanteur;
 
     public Musicien $auteur;
 
     public function __construct(int $idAlbum, string $titre, ?string $image,
-    ?int $annee, ?string $roleParent, ?array $genres, Musicien $chanteur, Musicien $auteur){
+    ?int $annee, ?string $roleParent, Musicien $chanteur, Musicien $auteur){
         $this->idAlbum = $idAlbum;
         $this->titre = $titre;
         $this->image = $image ?? "default.jpg";
         $this->annee = $annee;
         $this->roleParent = $roleParent;
-        $this->genres = $genres;
         $this->chanteur = $chanteur;
         $this->auteur = $auteur;
     }
 
+    public function genres(){
+        $currentDir = dirname(__FILE__);
+        $databasePath = $currentDir . '/../../data/fixtures.sqlite3';
+        $file_db = new PDO('sqlite:' . $databasePath);
+        $stmt = $file_db->prepare('SELECT * FROM APPARTENIR where idAlbum=:idAlbum');
+
+        $stmt->bindParam(':idAlbum', $this->idAlbum);
+        $stmt->execute();
+
+        $instances = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $genres = array();
+
+        foreach($instances as $i){
+            $genres[] = new Genre($i['nomGenre']);
+        }
+
+        return $genres;
+    }
+
     public function render(){
-        $html = "<img src='../data/images/".$this->image."'/><ul>";
-        $html = $html.$this->titre."<li>".$this->chanteur->nomMusicien."</li></ul>";
+        $html = "<a href='details-album.php?idAlbum=$this->idAlbum'><img src='../data/images/".$this->image."'/><ul>";
+        $html = $html.$this->titre."<li>".$this->chanteur->nomMusicien."</li></ul></a>";
         echo $html;
     }
+
+    public function __toString() {
+        return $this->titre;
+    } 
     
 }

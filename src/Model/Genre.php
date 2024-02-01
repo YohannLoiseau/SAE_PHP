@@ -30,5 +30,9 @@ class Genre{
             $objetAlbum = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     }
+
+    public function __toString() {
+        return $this->nomGenre;
+    }
     
 }

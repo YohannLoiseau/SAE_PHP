@@ -1,6 +1,7 @@
 <?php
 
 namespace src\Model;
+use \PDO;
 
 class Musicien{
 
@@ -10,25 +11,33 @@ class Musicien{
         $this->nomMusicien = $nomMusicien;
     }
 
-    public function lesAlbums(string $nomMusicien){
-        $file_db = new PDO('sqlite:../data/fixtures.sqlite3');
-        $stmt = $file_db->prepare('SELECT idAlbum FROM APPARTENIR WHERE nomGenre=:nomGenre');
+    public function lesAlbums(){
+        $currentDir = dirname(__FILE__);
+        $databasePath = $currentDir . '/../../data/fixtures.sqlite3';
+        $file_db = new PDO('sqlite:' . $databasePath);
+        $stmt = $file_db->prepare('SELECT * FROM ALBUM WHERE musicienBy=:musicienBy');
 
-        $stmt->bindParam(':nomGenre', $nomGenre);
+        $stmt->bindParam(':musicienBy', $this->nomMusicien);
         $stmt->execute();
 
-        $albums = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $instances = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $res = array();
+        $albums = array();
 
-        foreach($albums as $a){
-            $stmt = $file_db->prepare('SELECT * FROM ALBUM WHERE idAlbum=:idAlbum');
-
-            $stmt->bindParam(':idAlbum', $a['idAlbum']);
-            $stmt->execute();
-
-            $objetAlbum = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach($instances as $i){
+            $albums[] = new Album($i['idAlbum'], $i['titre'], $i['image'], $i['annee'],
+            $i['idAlbum'], $this, new Musicien($i['musicienParent']));
         }
+
+        return $albums;
+    }
+
+    public function __toString() {
+        return $this->nomMusicien;
+    }
+
+    public function render(){
+        return "<a href='details-musicien.php?nomMusicien=$this'>$this</a>";
     }
     
 }
