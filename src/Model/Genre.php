@@ -4,7 +4,7 @@ namespace src\Model;
 
 class Genre{
 
-    private string $nomGenre;
+    public string $nomGenre;
 
     public function __construct(string $nomGenre){
         $this->nomGenre = $nomGenre;
@@ -33,6 +33,10 @@ class Genre{
 
     public function __toString() {
         return $this->nomGenre;
+    }
+
+    public function render(){
+        return "<a href='genres.php?nomGenre=".$this->nomGenre."'>".$this->nomGenre."</a>";
     }
     
 }

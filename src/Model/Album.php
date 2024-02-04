@@ -51,9 +51,9 @@ class Album{
     }
 
     public function render(){
-        $html = "<a href='details-album.php?idAlbum=$this->idAlbum'><img src='../data/images/".$this->image."'/><ul>";
-        $html = $html.$this->titre."<li>".$this->chanteur->nomMusicien."</li></ul></a>";
-        echo $html;
+        $html = "<li><a href='albums.php?idAlbum=$this->idAlbum'><img src='../data/images/".$this->image."'/><p>";
+        $html = $html.$this->titre."<br/>".$this->chanteur->nomMusicien."</p></a></li>";
+        return $html;
     }
 
     public function __toString() {

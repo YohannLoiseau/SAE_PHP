@@ -37,7 +37,7 @@ class Musicien{
     }
 
     public function render(){
-        return "<a href='details-musicien.php?nomMusicien=$this'>$this</a>";
+        return "<a href='musiciens.php?nomMusicien=$this'>$this</a>";
     }
     
 }

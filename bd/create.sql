@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS GENRE (
 CREATE TABLE IF NOT EXISTS UTILISATEUR (
     idUtilisateur  int(5) NOT NULL PRIMARY KEY,
     nomUtilisateur VARCHAR(42),
-    mdp VARCHAR(42)
+    mdp VARCHAR(42),
+    estAdmin boolean
 );
 
 CREATE TABLE IF NOT EXISTS ALBUM (
