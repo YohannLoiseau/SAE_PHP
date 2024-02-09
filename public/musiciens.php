@@ -4,6 +4,8 @@
     </head>
     <body>
         <?php
+            session_start();
+
             include '../src/Factory.php';
             include '../data/DB.php';
             require_once '../src/autoloader.php';
@@ -12,10 +14,17 @@
             use src\Model\Album;
             use src\Model\Musicien;
 
+            $html = "";
+            if (!isset($_SESSION['idUtilisateur'])) {
+                $_SESSION['next'] = "musiciens.php";
+                header("Location: login.php");
+                exit();
+            }else{
+                $html.="<a href='logout.php'>Déconnexion</a>";
+            }
+
             if (empty($_GET['nomMusicien'])){
-                $html="";
                 $html.='<a href="albums.php">Tous les albums</a>
-                <a href="genres.php">Tous les genres</a>
                 <h1>Tous les musiciens</h1>
                 <ul>';
                 $musiciens = DB::db_script('SELECT * FROM MUSICIEN');
@@ -24,12 +33,10 @@
                 }
                 $html.='</ul>';
             }else{
-                $html="";
                 $html.='<a href="musiciens.php">Tous les musiciens</a>';
-                $albums = DB::db_script('SELECT * FROM ALBUM');
-                $albums = array_filter(
-                    $albums,
-                    fn($a) => $a->chanteur==$_GET['nomMusicien']);
+                $objet = Factory::create($_GET);
+                $albums = $objet->lesAlbums();
+
                 $html.="<h1>".$_GET['nomMusicien']."</h1>
                 <h2>L'année de début: ".min(array_column($albums, 'annee'))."</h2>
                 <h2>Nombre d'album: ".count($albums)."</h2>

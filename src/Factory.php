@@ -3,6 +3,7 @@ require_once '../src/autoloader.php';
 use src\Model\Musicien;
 use src\Model\Genre;
 use src\Model\Album;
+use src\Model\Utilisateur;
 
 class Factory{
     public static function create($data){
@@ -10,6 +11,13 @@ class Factory{
             return new Musicien($data['nomMusicien']);
         }elseif(isset($data['nomGenre'])){
             return new Genre($data['nomGenre']);
+        }elseif(isset($data['idUtilisateur'])){
+            return new Utilisateur(
+                $data['idUtilisateur'],
+                $data['nomUtilisateur'],
+                $data['mdp'],
+                $data['estAdmin']
+            );
         }else{
             $currentDir = dirname(__FILE__);
             $databasePath = $currentDir . '/../data/fixtures.sqlite3';

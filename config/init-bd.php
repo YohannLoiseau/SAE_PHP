@@ -29,7 +29,7 @@ try{
     $file_db->exec(
         "CREATE TABLE IF NOT EXISTS UTILISATEUR (
             idUtilisateur  int(5) NOT NULL PRIMARY KEY,
-            nomUtilisateur VARCHAR(42),
+            nomUtilisateur VARCHAR(42) UNIQUE,
             mdp VARCHAR(42),
             estAdmin boolean
           )"
@@ -128,6 +128,10 @@ try{
             $stmt_appartenir->execute();
         }
     }
+
+    $file_db->exec("INSERT INTO UTILISATEUR(idUtilisateur, nomUtilisateur, mdp, estAdmin)
+    VALUES (1, 'toto', 'toto', TRUE),
+    (2, 'aboo', 'aboo', FALSE)");
 
     echo "Insertion réussie !";
     $file_db=null;

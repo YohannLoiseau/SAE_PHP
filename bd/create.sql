@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS GENRE (
 
 CREATE TABLE IF NOT EXISTS UTILISATEUR (
     idUtilisateur  int(5) NOT NULL PRIMARY KEY,
-    nomUtilisateur VARCHAR(42),
+    nomUtilisateur VARCHAR(42) UNIQUE,
     mdp VARCHAR(42),
     estAdmin boolean
 );

@@ -23,7 +23,7 @@ class Album{
     ?int $annee, ?string $roleParent, Musicien $chanteur, Musicien $auteur){
         $this->idAlbum = $idAlbum;
         $this->titre = $titre;
-        $this->image = $image ?? "default.jpg";
+        $this->image = $image;
         $this->annee = $annee;
         $this->roleParent = $roleParent;
         $this->chanteur = $chanteur;
@@ -51,13 +51,45 @@ class Album{
     }
 
     public function render(){
-        $html = "<li><a href='albums.php?idAlbum=$this->idAlbum'><img src='../data/images/".$this->image."'/><p>";
+        if($this->image != "")
+            $path = "../data/images/".$this->image;
+        if(!file_exists($path))
+            $path="../data/images/default.jpg";
+        $html = "<li><a href='albums.php?idAlbum=$this->idAlbum'><img src='".$path."'/><p>";
         $html = $html.$this->titre."<br/>".$this->chanteur->nomMusicien."</p></a></li>";
         return $html;
     }
 
     public function __toString() {
         return $this->titre;
-    } 
+    }
+
+    public function estDansPlaylist(int $idUtilisateur){
+        $currentDir = dirname(__FILE__);
+        $databasePath = $currentDir . '/../../data/fixtures.sqlite3';
+        $file_db = new PDO('sqlite:' . $databasePath);
+        $rqt = "SELECT * FROM APPRECIER WHERE idUtilisateur=$idUtilisateur AND estDansPlaylist=TRUE";
+        $stmt = $file_db->query($rqt);
+        $instances = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach($instances as $i){
+            if($i['idAlbum'] == $this->idAlbum)
+                return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function estNote(int $idUtilisateur){
+        $currentDir = dirname(__FILE__);
+        $databasePath = $currentDir . '/../../data/fixtures.sqlite3';
+        $file_db = new PDO('sqlite:' . $databasePath);
+        $rqt = "SELECT * FROM APPRECIER WHERE idUtilisateur=$idUtilisateur AND note IS NOT NULL";
+        $stmt = $file_db->query($rqt);
+        $instances = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach($instances as $i){
+            if($i['idAlbum'] == $this->idAlbum)
+                return TRUE;
+        }
+        return FALSE;
+    }
     
 }
