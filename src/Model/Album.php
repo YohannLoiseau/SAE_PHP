@@ -51,6 +51,7 @@ class Album{
     }
 
     public function render(){
+        $path = null;
         if($this->image != "")
             $path = "../data/images/".$this->image;
         if(!file_exists($path))
@@ -68,7 +69,7 @@ class Album{
         $currentDir = dirname(__FILE__);
         $databasePath = $currentDir . '/../../data/fixtures.sqlite3';
         $file_db = new PDO('sqlite:' . $databasePath);
-        $rqt = "SELECT * FROM APPRECIER WHERE idUtilisateur=$idUtilisateur AND estDansPlaylist=TRUE";
+        $rqt = "SELECT * FROM APPRECIER WHERE idUtilisateur=$idUtilisateur";
         $stmt = $file_db->query($rqt);
         $instances = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach($instances as $i){
@@ -82,7 +83,7 @@ class Album{
         $currentDir = dirname(__FILE__);
         $databasePath = $currentDir . '/../../data/fixtures.sqlite3';
         $file_db = new PDO('sqlite:' . $databasePath);
-        $rqt = "SELECT * FROM APPRECIER WHERE idUtilisateur=$idUtilisateur AND note IS NOT NULL";
+        $rqt = "SELECT * FROM EVALUER WHERE idUtilisateur=$idUtilisateur";
         $stmt = $file_db->query($rqt);
         $instances = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach($instances as $i){

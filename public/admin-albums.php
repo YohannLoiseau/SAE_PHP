@@ -29,6 +29,7 @@
                 <th>ANNÉE</th>
                 <th>CHANTEUR</th>
                 <th>AUTEUR</th>
+                <th>GENRES</th>
             </tr>
             <?php
                 $html="";
@@ -44,6 +45,9 @@
                     if($a->roleParent){
                         $html.=" (".$a->roleParent.")";
                     }
+                    $html.="</td><td>";
+                    foreach($a->genres() as $g)
+                        $html.=$g." | ";
                     $html.="</td>
                     <td><a href=\"admin-albums.php?idAlbum=$a->idAlbum&action=edit\">editer</a></td>";
                     $html.="</td>
@@ -57,13 +61,17 @@
                     if(isset($_POST['idAlbum'])){
                         $idAlbum = $_POST['idAlbum'];
                         $titre = isset($_POST['titre']) ? $_POST['titre'] : '';
-                        $image = isset($_POST['image']) ? $_POST['image'] : None;
+                        if($_POST['image'] == null)
+                            $image = isset($_POST['imageAncienne']) ? $_POST['imageAncienne'] : '';
+                        else
+                            $image = $_POST['image'];
                         $annee = isset($_POST['annee']) ? $_POST['annee'] : '';
                         $chanteur = isset($_POST['chanteur']) ? $_POST['chanteur'] : '';
                         $auteur = isset($_POST['auteur']) ? $_POST['auteur'] : '';
                         $roleParent = isset($_POST['roleParent']) ? $_POST['roleParent'] : '';
+                        $genres = isset($_POST['genres']) ? $_POST['genres'] : [];
             
-                        DB::db_edit_album($idAlbum, $titre, $image, intval($annee), $chanteur, $auteur, $roleParent);
+                        DB::db_edit_album($idAlbum, $titre, $image, intval($annee), $chanteur, $auteur, $roleParent, $genres);
                     }else{
                         $titre = isset($_POST['titre']) ? $_POST['titre'] : '';
                         $image = isset($_POST['image']) ? $_POST['image'] : None;
@@ -71,8 +79,9 @@
                         $chanteur = isset($_POST['chanteur']) ? $_POST['chanteur'] : '';
                         $auteur = isset($_POST['auteur']) ? $_POST['auteur'] : '';
                         $roleParent = isset($_POST['roleParent']) ? $_POST['roleParent'] : '';
+                        $genres = isset($_POST['genres']) ? $_POST['genres'] : [];
             
-                        DB::db_add_album($titre, $image, intval($annee), $chanteur, $auteur, $roleParent);
+                        DB::db_add_album($titre, $image, intval($annee), $chanteur, $auteur, $roleParent, $genres);
                     }
                 }
                 echo $html;
@@ -91,14 +100,16 @@
                 
                 $html.='<label for="titre">Titre:</label>
                 <input type="text" id="titre" name="titre" '.($album ? 'value="' . $album->titre . '"' : '')
-                .'required><br>
+                .'required><br>';
+                
+                $html.='<label for="image">Image:</label>
+                <input type="file" id="image" name="image" accept="image/*"><br>';
+
+                if(!empty($album->image))
+                    $html.='<input type="text" value="'.$album->image.'" id="imageAncienne" name="imageAncienne"><br>';
     
-                <label for="image">Image:</label>
-                <input type="text" id="image" name="image"'.($album ? 'value="' . $album->image . '"' : '')
-                .'><br>
-    
-                <label for="annee">Année:</label>
-                <input type="int" id="annee" name="annee" '.($album ? 'value="' . $album->annee . '"' : '')
+                $html.='<label for="annee">Année:</label>
+                <input type="int" id="annee" name="annee" pattern="[1-9]\d{3}|202[0-4]" title="Une année entre 1900 et 2024" '.($album ? 'value="' . $album->annee . '"' : '')
                 .'required><br>
     
                 <label for="chanteur">Chanteur:</label>
@@ -126,7 +137,31 @@
                 $html.='</select><label for="roleParent">autre role d\'auteur:</label>
                 <input type="text" id="roleParent" name="roleParent"'.($album ? 'value="' . $album->roleParent . '"' : '')
                 .'><br>
-                <input type="submit" value="';
+                <fieldset>
+                    <legend>Choisir le(s) genre(s)</legend>';
+
+                $genres = DB::db_script('SELECT * FROM GENRE');
+
+                if($album){
+                    $les_genres_de = DB::db_script('SELECT nomGenre FROM APPARTENIR WHERE idAlbum='.$album->idAlbum);
+                    $genre_de_strings = [];
+                    foreach ($les_genres_de as $genre) {
+                        $genre_de_strings[] = $genre->nomGenre;
+                    }
+                }
+
+                foreach($genres as $g){
+                    $html.='<div>
+                        <input type="checkbox" id="'.$g->nomGenre.'" name="genres[]" value="'.$g.'"';
+                    if($album && in_array($g->nomGenre, $genre_de_strings))
+                        $html.=' checked';
+
+                    $html.='/>
+                        <label for="'.$g->nomGenre.'">'.$g->nomGenre.'</label>
+                    </div>';
+                }
+
+                $html.='</fieldset><input type="submit" value="';
                 if(empty($album))
                     $html.='Créer un album">';
                 else

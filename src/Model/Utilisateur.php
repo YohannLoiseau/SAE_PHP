@@ -64,14 +64,8 @@ class Utilisateur{
             $databasePath = $currentDir . '/../../data/fixtures.sqlite3';
             $file_db = new PDO('sqlite:' . $databasePath);
 
-            $stmt = $file_db->prepare("INSERT OR REPLACE INTO APPRECIER(idUtilisateur,idAlbum,note,estDansPlaylist)
-            VALUES(:idUtilisateur,:idAlbum,COALESCE(
-                (SELECT note FROM APPRECIER WHERE idUtilisateur=:idUtilisateur AND idAlbum=:idAlbum),
-                NULL),1
-            )");
-
-            // $stmt = $file_db->prepare("INSERT INTO APPRECIER(idUtilisateur,idAlbum,estDansPlaylist) VALUES
-            // (:idUtilisateur,:idAlbum,1)");
+            $stmt = $file_db->prepare("INSERT INTO APPRECIER(idUtilisateur,idAlbum)
+            VALUES(:idUtilisateur,:idAlbum)");
 
             $stmt->bindParam(':idUtilisateur', $this->idUtilisateur);
             $stmt->bindParam(':idAlbum', $idAlbum);
@@ -88,12 +82,11 @@ class Utilisateur{
             $databasePath = $currentDir . '/../../data/fixtures.sqlite3';
             $file_db = new PDO('sqlite:' . $databasePath);
 
-            $update_or_delete_p = "UPDATE APPRECIER 
-                                SET estDansPlaylist = 0
-                                WHERE idUtilisateur = :idUtilisateur 
-                                AND idAlbum = :idAlbum";
+            $delete_p = "DELETE FROM APPRECIER
+                        WHERE idUtilisateur = :idUtilisateur 
+                        AND idAlbum = :idAlbum";
 
-            $stmt = $file_db->prepare($update_or_delete_p);
+            $stmt = $file_db->prepare($delete_p);
             $stmt->bindParam(':idUtilisateur', $this->idUtilisateur, PDO::PARAM_INT);
             $stmt->bindParam(':idAlbum', $idAlbum, PDO::PARAM_INT);
             $stmt->execute();
@@ -108,18 +101,14 @@ class Utilisateur{
             $databasePath = $currentDir . '/../../data/fixtures.sqlite3';
             $file_db = new PDO('sqlite:' . $databasePath);
 
-            $stmt = $file_db->prepare("INSERT OR REPLACE INTO APPRECIER(idUtilisateur,idAlbum,note,estDansPlaylist)
-            VALUES(:idUtilisateur,:idAlbum,:note,COALESCE(
-                (SELECT estDansPlaylist FROM APPRECIER WHERE idUtilisateur=:idUtilisateur AND idAlbum=:idAlbum),
-                0)
-            )");
+            $stmt = $file_db->prepare("INSERT INTO EVALUER(idUtilisateur,idAlbum,note)
+            VALUES(:idUtilisateur,:idAlbum,:note)");
 
             $stmt->bindParam(':idUtilisateur', $this->idUtilisateur);
             $stmt->bindParam(':idAlbum', $idAlbum);
             $stmt->bindParam(':note', $note);
 
             $stmt->execute();
-            header('Location: profil.php');
         }catch(PDOException $ex){
             echo "<script type='text/javascript'>alert(\"ajout note d'album IMPOSSIBLE\");</script>";
         }
@@ -131,8 +120,7 @@ class Utilisateur{
             $databasePath = $currentDir . '/../../data/fixtures.sqlite3';
             $file_db = new PDO('sqlite:' . $databasePath);
 
-            $update_or_delete_p = "UPDATE APPRECIER 
-                                SET note = null
+            $update_or_delete_p = "DELETE FROM EVALUER
                                 WHERE idUtilisateur = :idUtilisateur 
                                 AND idAlbum = :idAlbum";
 

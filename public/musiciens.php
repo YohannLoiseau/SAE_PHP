@@ -37,13 +37,22 @@
                 $objet = Factory::create($_GET);
                 $albums = $objet->lesAlbums();
 
-                $html.="<h1>".$_GET['nomMusicien']."</h1>
-                <h2>L'année de début: ".min(array_column($albums, 'annee'))."</h2>
-                <h2>Nombre d'album: ".count($albums)."</h2>
-                <h2>Les Albums:</h2>";
-                foreach($albums as $unAlbum){
-                    $html.=$unAlbum->render();
+                $html.="<h1>".$_GET['nomMusicien']."</h1>";
+
+                if(count($albums)>0){
+                    $html.="<h2>L'année de début: ".min(array_column($albums, 'annee'))."</h2>
+                    <h2>Nombre d'albums: ".count($albums)."</h2>
+                    <h2>Les Albums:</h2>";
+                    foreach($albums as $unAlbum){
+                        $html.=$unAlbum->render();
+                    }
+                }else{
+                    $html.="<h2>L'année de début: Non Disponible</h2>
+                    <h2>Nombre d'album: 0</h2>
+                    <h2>Les Albums:</h2>
+                    <h3>-- aucun album trouvé --</h3>";
                 }
+                
             }
             echo $html;
         ?>

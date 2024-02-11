@@ -36,8 +36,15 @@ CREATE TABLE IF NOT EXISTS APPARTENIR (
 CREATE TABLE IF NOT EXISTS APPRECIER (
     idUtilisateur   int(5) NOT NULL,
     idAlbum         int(5) NOT NULL,
+    PRIMARY KEY (idUtilisateur, idAlbum),
+    FOREIGN KEY (idAlbum) REFERENCES ALBUM (idAlbum),
+    FOREIGN KEY (idUtilisateur) REFERENCES UTILISATEUR (idUtilisateur)
+);
+
+CREATE TABLE IF NOT EXISTS EVALUER (
+    idUtilisateur   int(5) NOT NULL,
+    idAlbum         int(5) NOT NULL,
     note            int(1),
-    estDansPlaylist boolean,
     PRIMARY KEY (idUtilisateur, idAlbum),
     FOREIGN KEY (idAlbum) REFERENCES ALBUM (idAlbum),
     FOREIGN KEY (idUtilisateur) REFERENCES UTILISATEUR (idUtilisateur)

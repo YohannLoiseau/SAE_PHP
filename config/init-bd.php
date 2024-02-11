@@ -2,7 +2,7 @@
 <?php
 require_once '../src/autoloader.php';
 require_once '../vendor/autoload.php';
-// use Classes\;
+
 use Symfony\Component\Yaml\Yaml;
 
 date_default_timezone_set('Europe/Paris');
@@ -66,8 +66,18 @@ try{
         "CREATE TABLE IF NOT EXISTS APPRECIER (
             idUtilisateur   int(5) NOT NULL,
             idAlbum         int(5) NOT NULL,
+            PRIMARY KEY (idUtilisateur, idAlbum),
+            FOREIGN KEY (idAlbum) REFERENCES ALBUM (idAlbum),
+            FOREIGN KEY (idUtilisateur) REFERENCES UTILISATEUR (idUtilisateur)
+          )"
+    );
+
+    // table EVALUER
+    $file_db->exec(
+        "CREATE TABLE IF NOT EXISTS EVALUER (
+            idUtilisateur   int(5) NOT NULL,
+            idAlbum         int(5) NOT NULL,
             note            int(1),
-            estDansPlaylist boolean,
             PRIMARY KEY (idUtilisateur, idAlbum),
             FOREIGN KEY (idAlbum) REFERENCES ALBUM (idAlbum),
             FOREIGN KEY (idUtilisateur) REFERENCES UTILISATEUR (idUtilisateur)

@@ -22,6 +22,7 @@
                 $idAlbum = isset($_POST['idAlbum']) ? $_POST['idAlbum'] : None;
                 $note = isset($_POST['note']) ? $_POST['note'] : None;
                 $user->add_note_album($idAlbum, $note);
+                header('Location: albums.php?idAlbum='.$idAlbum);
             }
 
             if (isset($_SESSION['idUtilisateur'])) {
@@ -80,7 +81,7 @@
                 if(count($albums)>0){
                     $html.="<h2>Nombre d'albums: ".count($albums)."</h2><ul>";
                 }else{
-                    $html.="<h2>Il n'y</h2><ul>";
+                    $html.="<h2>Aucun résultat trouvé</h2><ul>";
                 }
                 
                 foreach($albums as $unAlbum){
@@ -137,7 +138,7 @@
                     // <a href='albums.php?idAlbum=".$album->idAlbum."&action=note'>Évaluer l'album</a>
                     // <input type='submit' value='Évaluer'>";
 
-                    $note=DB::db_script('SELECT note FROM APPRECIER WHERE idAlbum='.$album->idAlbum
+                    $note=DB::db_script('SELECT note FROM EVALUER WHERE idAlbum='.$album->idAlbum
                     .' AND idUtilisateur='.$_SESSION['idUtilisateur'])[0]['note'];
                     $html.="<h2>Votre Note</h2>
                     <p>Note: $note</p>";
@@ -147,7 +148,8 @@
                     $html.="<form action='albums.php' method='POST'>
                         <input type='hidden' id='idAlbum' name='idAlbum' value=".$_GET['idAlbum'].">
                         <label for='note'>Note:</label>
-                        <input type='text' id='note' name='note' required><br>
+                        <input type='int' id='note' name='note' pattern='[0-9]|10'
+                        title='Entier entre 0 à 10' required><br>
                         <input type='submit' value='Évaluer'>
                     </form>";
                 }
