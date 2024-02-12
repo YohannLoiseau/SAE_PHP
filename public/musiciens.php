@@ -1,30 +1,33 @@
 <html>
     <head>
         <title>Les Musiciens</title>
+        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="css/navbar.css">
     </head>
     <body>
         <?php
-            session_start();
+            if(empty($_SESSION))
+                session_start();
 
-            include '../src/Factory.php';
-            include '../data/DB.php';
+            include_once '../src/Factory.php';
+            include_once '../data/DB.php';
             require_once '../src/autoloader.php';
 
             use src\Model\Genre;
             use src\Model\Album;
             use src\Model\Musicien;
 
-            $html = "";
+            include_once 'navbar.php';
+
+            $html = "<main>";
             if (!isset($_SESSION['idUtilisateur'])) {
                 $_SESSION['next'] = "musiciens.php";
                 header("Location: login.php");
                 exit();
-            }else{
-                $html.="<a href='logout.php'>Déconnexion</a>";
             }
 
             if (empty($_GET['nomMusicien'])){
-                $html.='<a href="albums.php">Tous les albums</a>
+                $html.='<a href="albums.php"><button>Tous les albums</button></a>
                 <h1>Tous les musiciens</h1>
                 <ul>';
                 $musiciens = DB::db_script('SELECT * FROM MUSICIEN');
@@ -33,7 +36,7 @@
                 }
                 $html.='</ul>';
             }else{
-                $html.='<a href="musiciens.php">Tous les musiciens</a>';
+                $html.='<a href="musiciens.php"><button>Tous les musiciens</button></a>';
                 $objet = Factory::create($_GET);
                 $albums = $objet->lesAlbums();
 
@@ -54,7 +57,7 @@
                 }
                 
             }
-            echo $html;
+            echo $html.'</main>';
         ?>
     </body>
 </html>

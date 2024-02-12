@@ -1,11 +1,11 @@
 <html>
     <head>
         <title>Mon Profil</title>
+        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="css/navbar.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     </head>
-    <body>
-        <h1>Mon Profil</h1>
-        <a href='logout.php'>Déconnexion</a>
-        <a href='albums.php'>Tous les albums</a>
+    <body>      
         <?php
             session_start();
             unset($_SESSION['next']);
@@ -18,17 +18,23 @@
             use src\Model\Album;
             use src\Model\Musicien;
 
+            include_once 'navbar.php';
+
+            echo "<main><a href='albums.php'><button>Tous les albums</button></a>";
+
             $user = DB::db_script('SELECT * FROM UTILISATEUR WHERE idUtilisateur='
             .$_SESSION["idUtilisateur"])[0];
 
             if($user->estAdmin)
-                echo '<a href="admin.php">Espace Admin</a>';
+                echo '<a href="admin.php"><button>Espace Admin</button></a>';
+
+            echo "<h1>Mon Profil</h1>";
         ?>
         <h2>Mes informations</h2>
         <?php
             $html="<p>Nom: ".$user->nomUtilisateur.
             "<p>Mot de Passe: ".$user->mdp.
-            "<p>Admin: ".($user->estAdmin ? 'TRUE' : 'FALSE');
+            "<p>Admin: ".($user->estAdmin ? 'Oui' : 'Non');
 
             echo $html;
         ?>
@@ -65,7 +71,7 @@
                 foreach($avis as $a){
                     $objetAlbum = DB::db_script('SELECT * FROM ALBUM WHERE idAlbum='.$a['idAlbum'])[0];
                     $html.='<li><h3>'.$objetAlbum->titre.'</h3>';
-                    $html.='<p>Note: '.$a['note'].' / 10</p></li>';
+                    $html.='<p>Note: '.$a['note'].' / 10 <span class="fas fa-star"></span></p></li>';
                     $html.="<a href='profil.php?idAlbum=".$a['idAlbum']."' onclick='return confirm(\"Confirmation\")'>Supprimer</a>";
                 }
                 $html.='</ul>';
@@ -73,7 +79,7 @@
                 $html.="<p>-- aucun avis trouvé --</p>";
             }
             
-            echo $html;
+            echo $html.'</main>';
         ?>
         </ul>
     </body>
