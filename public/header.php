@@ -1,4 +1,4 @@
-<nav>
+<header>
     <img src='../data/images/logo.png' alt='Logo'>
     <?php
         if (isset($_SESSION['idUtilisateur'])) {
@@ -14,4 +14,4 @@
         }
         echo $html;
     ?>
-</nav>
+</header>

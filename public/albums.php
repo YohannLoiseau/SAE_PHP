@@ -2,7 +2,7 @@
     <head>
         <title>Les Albums</title>
         <link rel="stylesheet" href="css/base.css">
-        <link rel="stylesheet" href="css/navbar.css">
+        <link rel="stylesheet" href="css/header.css">
     </head>
     <body>
         <?php
@@ -18,7 +18,7 @@
             use src\Model\Album;
             use src\Model\Musicien;
 
-            include_once 'navbar.php';
+            include_once 'header.php';
 
             $html = "<main>";
 
@@ -32,7 +32,7 @@
 
             $albums = DB::db_script('SELECT * FROM ALBUM');
             if(empty($_GET['idAlbum'])){
-                $html.="<a href='musiciens.php'><button>Tous les musiciens</button></a>
+                $html.="<nav><a href='musiciens.php'><button>Tous les musiciens</button></a></nav>
                 <h1>Rechercher</h1>
                 <form method='GET' action='albums.php'>
                 <input type='text' id='titre' name='titre' placeholder='ex: we, love, etc..'>";

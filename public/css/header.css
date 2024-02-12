@@ -1,4 +1,4 @@
-nav{
+header{
     padding: 0%;
     margin: 0%;
     background-color: #121212;
@@ -10,26 +10,26 @@ nav{
     align-items: center;
 }
 
-nav img{
+header img{
     width: 15em;
 }
 
-nav a{
+header a{
     text-decoration: none;
 }
 
-nav li{
+header li{
     list-style-type: none;
 }
 
-nav ul{
+header ul{
     display: flex;
     justify-content: right;
     width: 100%;
     margin-left: auto;   
 }
 
-nav button{
+header button{
     background-color: #836dec;
     padding: 5px;
     border-radius: 10px;
@@ -39,6 +39,6 @@ nav button{
     font-size: 20px;
 }
 
-nav button:hover{
+header button:hover{
     background-color: #cbc5e7;
 }

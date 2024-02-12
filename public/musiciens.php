@@ -2,7 +2,7 @@
     <head>
         <title>Les Musiciens</title>
         <link rel="stylesheet" href="css/base.css">
-        <link rel="stylesheet" href="css/navbar.css">
+        <link rel="stylesheet" href="css/header.css">
     </head>
     <body>
         <?php
