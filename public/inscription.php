@@ -16,6 +16,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Inscription</title>
+        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="css/login.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <script>
         function validateForm() {
             var usernameInput = document.getElementById('nom');
@@ -53,26 +56,30 @@
     </script>
     </head>
     <body>
-    <a href='login.php'>Page de Connexion</a>
-    <h1>Créer un compte</h1>
-    <form action="inscription.php" method="post" onsubmit="return validateForm()">
-        <label for="nom">Nom:</label>
-        <input type="text" id="nom" name="nom" required><br>
+        <a href='login.php'><span class="fas fa-arrow-left"></span> Page de Connexion</a>
+        <main>
+            <h1>Créer un compte</h1>
+            <form action="inscription.php" method="post" onsubmit="return validateForm()">
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" name="nom" required><br>
 
-        <label for="mdp">Mot de Passe:</label>
-        <input type="password" id="mdp" name="mdp" required><br>
+                <label for="mdp">Mot de Passe:</label>
+                <input type="password" id="mdp" name="mdp" required><br>
 
-        <label for="confirm_mdp">Confirmation de mot de passe:</label>
-        <input type="password" id="confirm_mdp" name="confirm_mdp" required><br>
+                <label for="confirm_mdp">Confirmation de mot de passe:</label>
+                <input type="password" id="confirm_mdp" name="confirm_mdp" required><br>
 
-        <input type="submit" value="Créer un compte">
-    </form>
-    <?php
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nom = isset($_POST['nom']) ? $_POST['nom'] : '';
-            $mdp = isset($_POST['mdp']) ? $_POST['mdp'] : '';
+                <input type="submit" value="Créer un compte">
+            </form>
+            <?php
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $nom = isset($_POST['nom']) ? $_POST['nom'] : '';
+                    $mdp = isset($_POST['mdp']) ? $_POST['mdp'] : '';
 
-            DB::db_add_user($nom, $mdp, FALSE);
-            header("Location: login.php");
-        }
-    ?>
+                    DB::db_add_user($nom, $mdp, FALSE);
+                    header("Location: login.php");
+                }
+            ?>
+        </main>
+    </body>
+</html>

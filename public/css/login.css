@@ -1,0 +1,31 @@
+body{
+    background-image: url(../../data/images/bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+form{
+    margin: 0;
+}
+
+main{
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 2em;
+    margin: 1em;
+}
+
+body{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+body>a, main>a, p>a:hover{
+    text-decoration: underline;
+    color: #ab9eeb;
+}
+
+h1{
+    text-decoration: none;
+}
