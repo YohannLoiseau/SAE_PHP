@@ -3,6 +3,15 @@ body{
     color: #ab9eeb;
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+aside{
+    background-color: #202020;
+    flex-basis: 3em;
+    flex-grow: 0;
+    margin: 1em;
 }
 
 a{

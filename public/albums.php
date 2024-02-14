@@ -3,6 +3,7 @@
         <title>Les Albums</title>
         <link rel="stylesheet" href="css/base.css">
         <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/aside.css">
     </head>
     <body>
         <?php
@@ -19,6 +20,7 @@
             use src\Model\Musicien;
 
             include_once 'header.php';
+            include_once 'aside.php';
 
             $html = "<main>";
 
@@ -32,33 +34,10 @@
 
             $albums = DB::db_script('SELECT * FROM ALBUM');
             if(empty($_GET['idAlbum'])){
-                $html.="<nav><a href='musiciens.php'><button>Tous les musiciens</button></a></nav>
-                <h1>Rechercher</h1>
-                <form method='GET' action='albums.php'>
-                <input type='text' id='titre' name='titre' placeholder='ex: we, love, etc..'>";
+                
 
-                $html.="<select type='text' id='annee' name='annee'>
-                    <option value='' disabled selected>-- Choisir une année --</option>";
-
-                $lesAnnees = DB::db_script('SELECT DISTINCT annee FROM ALBUM ORDER BY annee');
-
-                foreach($lesAnnees as $a){
-                    $html.='<option value="'.$a["annee"].'">'.$a["annee"].'</option>';
-                }
-
-                $html.="</select><select type='text' id='nomGenre' name='nomGenre'>
-                    <option value='' disabled selected>-- Choisir un genre --</option>";
-
-                $lesGenres = DB::db_script('SELECT * FROM GENRE ORDER BY nomGenre');
-
-                foreach($lesGenres as $g){
-                    $html.='<option value="'.$g->nomGenre.'">'.$g->nomGenre.'</option>';
-                }
-
-                $html.='</select>
-                    <input type="submit" value="Submit">
-                </form>
-                <h1>Les Albums';
+                
+                $html.='<h2>Les Albums</h2>';
                 if(!empty($_GET['nomGenre'])){
                     $html.=" de genre ".$_GET['nomGenre'];
                     $albums = array_filter(
@@ -95,7 +74,7 @@
                 }
                 $album = Factory::create(array("idAlbum" => intval($_GET['idAlbum'])));
                 $html.='<a href="albums.php"><button>Tous les albums</button></a>
-                <h1>'.$album->titre.'</h1>';
+                <h3>'.$album->titre.'</h3>';
                 if($album->image != "")
                     $path = "../data/images/".$album->image;
                 if(!file_exists($path))
