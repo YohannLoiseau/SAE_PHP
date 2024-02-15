@@ -53,7 +53,7 @@ class Album{
     public function render(){
         $path = null;
         if($this->image != "")
-            $path = "../data/images/".$this->image;
+            $path = "../data/images/". urldecode($this->image);
         if(!file_exists($path))
             $path="../data/images/default.jpg";
         $html = "<li><a href='albums.php?idAlbum=$this->idAlbum'><img src='".$path."'/><p>";
