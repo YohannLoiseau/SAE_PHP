@@ -53,10 +53,10 @@ class Album{
     public function render(){
         $path = null;
         if($this->image != "")
-            $path = "../data/images/". $this->image;
+            $path = "../data/images/". urldecode($this->image);
         if(!file_exists($path))
             $path="../data/images/default.jpg";
-        $html = "<li><a href='albums.php?idAlbum=$this->idAlbum'><img src='".urldecode($path)."'/><p>";
+        $html = "<li><a href='albums.php?idAlbum=$this->idAlbum'><img src='".$path."'/><p>";
         $html = $html.$this->titre."<br/>".$this->chanteur->nomMusicien."</p></a></li>";
         return $html;
     }

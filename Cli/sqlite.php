@@ -103,7 +103,7 @@ switch ($argv[2]) {
 
             $stmt_album->bindParam(':musicienBy', $instance['by']);
             $stmt_album->bindParam(':idAlbum', $instance['entryId']);
-            $stmt_album->bindParam(':image', urldecode($instance['img']));
+            $stmt_album->bindParam(':image', $instance['img']);
             $stmt_album->bindParam(':annee', $instance['releaseYear']);
             $stmt_album->bindParam(':titre', $instance['title']);
             if(preg_match('/^(.*?)\s*\((.*?)\)$/', $instance['parent'], $decoupe)){

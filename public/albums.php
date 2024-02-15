@@ -76,7 +76,7 @@
                 $html.='<a href="albums.php"><button>Tous les albums</button></a>
                 <h3>'.$album->titre.'</h3>';
                 if($album->image != "")
-                    $path = "../data/images/".$album->image;
+                    $path = "../data/images/".urldecode($album->image);
                 if(!file_exists($path))
                     $path="../data/images/default.jpg";
                 $html.='<img src="'.$path.'"/>';
