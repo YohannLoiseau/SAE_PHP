@@ -2,7 +2,7 @@
     <?php
         $html="<nav><a href='musiciens.php'><button>Tous les musiciens</button></a>
         <a href='albums.php'><button>Tous les albums</button></a></nav>";
-        if($_GET['idAlbum'] == null && $_GET['nomMusicien'] == null){
+        if($_GET['idAlbum'] == null && $_GET['nomMusicien'] == null && strpos($_SERVER['PHP_SELF'], "profil") == false){
             $html.="<div><h2>Rechercher</h2>
             <form method='GET' action='albums.php'>
             <input type='text' id='titre' name='titre' placeholder='ex: we, love, etc..'>";
