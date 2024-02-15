@@ -17,7 +17,8 @@
             use src\Model\Album;
             use src\Model\Musicien;
 
-            include_once 'navbar.php';
+            include_once 'header.php';
+            include_once 'aside.php';
 
             $html = "<main>";
             if (!isset($_SESSION['idUtilisateur'])) {
@@ -27,16 +28,13 @@
             }
 
             if (empty($_GET['nomMusicien'])){
-                $html.='<a href="albums.php"><button>Tous les albums</button></a>
-                <h1>Tous les musiciens</h1>
-                <ul>';
+                $html.='<h1>Tous les musiciens</h1><ul>';
                 $musiciens = DB::db_script('SELECT * FROM MUSICIEN');
                 foreach ($musiciens as $m){
                     $html.='<li><a href="musiciens.php?nomMusicien=' . $m->nomMusicien . '">' . $m->nomMusicien . '</a></li>';
                 }
                 $html.='</ul>';
             }else{
-                $html.='<a href="musiciens.php"><button>Tous les musiciens</button></a>';
                 $objet = Factory::create($_GET);
                 $albums = $objet->lesAlbums();
 

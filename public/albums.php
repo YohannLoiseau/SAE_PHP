@@ -73,8 +73,7 @@
                     exit();
                 }
                 $album = Factory::create(array("idAlbum" => intval($_GET['idAlbum'])));
-                $html.='<a href="albums.php"><button>Tous les albums</button></a>
-                <h3>'.$album->titre.'</h3>';
+                $html.='<h3>'.$album->titre.'</h3>';
                 if($album->image != "")
                     $path = "../data/images/".$album->image;
                 if(!file_exists($path))
