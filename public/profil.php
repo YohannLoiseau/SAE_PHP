@@ -18,9 +18,10 @@
             use src\Model\Album;
             use src\Model\Musicien;
 
-            include_once 'navbar.php';
+            include_once 'header.php';
+            include_once 'aside.php';
 
-            echo "<main><a href='albums.php'><button>Tous les albums</button></a>";
+            echo "<main>";
 
             $user = DB::db_script('SELECT * FROM UTILISATEUR WHERE idUtilisateur='
             .$_SESSION["idUtilisateur"])[0];
@@ -38,7 +39,7 @@
 
             echo $html;
         ?>
-        <h2>Mon Playlist</h2>
+        <h2>Ma Playlist</h2>
         <?php
             $html="";
             $playlist = DB::db_script('SELECT * FROM APPRECIER WHERE idUtilisateur='
@@ -51,7 +52,7 @@
                 }
                 $html.='</ul>';
             }else{
-                $html.="<p>-- aucun album dans votre playlist --</p>";
+                $html.="<p>-- Aucun album dans votre playlist --</p>";
             }
             
             echo $html;
@@ -76,7 +77,7 @@
                 }
                 $html.='</ul>';
             }else{
-                $html.="<p>-- aucun avis trouvé --</p>";
+                $html.="<p>-- Aucun avis trouvé --</p>";
             }
             
             echo $html.'</main>';

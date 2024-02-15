@@ -73,8 +73,7 @@
                     exit();
                 }
                 $album = Factory::create(array("idAlbum" => intval($_GET['idAlbum'])));
-                $html.='<a href="albums.php"><button>Tous les albums</button></a>
-                <h3>'.$album->titre.'</h3>';
+                $html.='<h3>'.$album->titre.'</h3>';
                 if($album->image != "")
                     $path = "../data/images/".$album->image;
                 if(!file_exists($path))
@@ -109,7 +108,7 @@
                 if (!$album->estDansPlaylist($_SESSION['idUtilisateur'])) {
                     $html.="<a href='albums.php?idAlbum=".$album->idAlbum."&action=add'><button>Ajouter dans playlist</button></a>";
                 }else{
-                    $html.="<a href='albums.php?idAlbum=".$album->idAlbum."&action=remove' onclick='return confirm(\"Confirmation\")'><button>Enlever de playlist</button></a>";
+                    $html.="<a href='albums.php?idAlbum=".$album->idAlbum."&action=remove' onclick='return confirm(\"Confirmation\")'><button>Enlever de la playlist</button></a>";
                 }
                 if ($album->estNote($_SESSION['idUtilisateur'])) {
                     $note=DB::db_script('SELECT note FROM EVALUER WHERE idAlbum='.$album->idAlbum

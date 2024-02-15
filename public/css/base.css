@@ -9,9 +9,9 @@ body{
 
 aside{
     background-color: #202020;
-    flex-basis: 3em;
-    flex-grow: 0;
-    margin: 1em;
+    flex-basis: 10%;
+    flex-grow: 1;
+    padding: 1em;
 }
 
 a{
@@ -25,6 +25,8 @@ table a{
 
 main{
     padding: 2em;
+    flex-basis: 80%;
+    flex-grow: 0;
 }
 
 main *{
@@ -49,7 +51,7 @@ main img{
     padding: 2em;
 }
 
-main button, input[type="submit"]{
+button, input[type="submit"]{
     background-color: #836dec;
     padding: 4px;
     border-radius: 10px;
@@ -59,14 +61,30 @@ main button, input[type="submit"]{
     margin-right: 2em;
 }
 
-main button:hover, input[type="submit"]:hover, form input, form select{
+form input, form select{
     background-color: #cbc5e7;
     color: black;
     padding: 4px;
     border-radius: 10px;
     border-width: 0;
     font-size: 15px;
+    cursor: pointer;
 }
+
+button:hover, input[type="submit"]:hover{
+    background-color: #cbc5e7;
+    color: black;
+    cursor: pointer;
+}
+
+input, select, button{
+    margin-bottom: 1em;
+}
+
+input[type="text"]{
+    cursor: text;
+}
+
 
 form *{
     margin-right: 1em;
