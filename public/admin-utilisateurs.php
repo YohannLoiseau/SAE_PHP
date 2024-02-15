@@ -19,10 +19,10 @@
             use src\Model\Album;
             use src\Model\Musicien;
 
-            include_once 'navbar.php';
+            include_once 'header.php';
+            include_once 'aside.php';
         ?>
         <main>
-            <button><a href='admin.php'>Page Admin</a></button>
             <h1>Gérer Les Utilisateurs</h1>
             <h2>Les Utilisateurs</h2>
             <table>

@@ -26,8 +26,6 @@
             $user = DB::db_script('SELECT * FROM UTILISATEUR WHERE idUtilisateur='
             .$_SESSION["idUtilisateur"])[0];
 
-            if($user->estAdmin)
-                echo '<a href="admin.php"><button>Espace Admin</button></a>';
 
             echo "<h1>Mon Profil</h1>";
         ?>
