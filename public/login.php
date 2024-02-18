@@ -59,7 +59,7 @@
                         if(!$mdpValide){
                             echo "Votre mot de passe est faux";
                         }else{
-                            $next = $estAdmin ? "admin.php" : "albums.php";
+                            $next = $estAdmin ? "profil.php" : "albums.php";
                             if(isset($_SESSION['next'])){
                                 $next = $_SESSION['next'];
                             }

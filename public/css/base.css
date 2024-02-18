@@ -113,3 +113,41 @@ tr>*{
 h1{
     text-decoration: underline;
 }
+
+.titre{
+    line-break:1;
+    font-weight: bold;
+    color: #ab9eeb;
+    text-transform: uppercase;
+}
+
+.album:hover{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.album{
+    width: 15em;
+}
+
+.musicien{
+    width: 15em;
+    padding: 3em;
+}
+
+.musicien:hover{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#page-musicien{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+fieldset{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+fieldset input{
+    margin: 0;
+}

@@ -28,10 +28,10 @@
             }
 
             if (empty($_GET['nomMusicien'])){
-                $html.='<h1>Tous les musiciens</h1><ul>';
+                $html.='<h1>Tous les musiciens</h1><ul id=page-musicien>';
                 $musiciens = DB::db_script('SELECT * FROM MUSICIEN');
                 foreach ($musiciens as $m){
-                    $html.='<li><a href="musiciens.php?nomMusicien=' . $m->nomMusicien . '">' . $m->nomMusicien . '</a></li>';
+                    $html.='<li class=musicien><a href="musiciens.php?nomMusicien=' . $m->nomMusicien . '">' . $m->nomMusicien . '</a></li>';
                 }
                 $html.='</ul>';
             }else{
