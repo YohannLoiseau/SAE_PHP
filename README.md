@@ -48,3 +48,12 @@
 
 `nom: toto  mdp: toto`
 
+## Lancement
+
+- Ligne de commande dans terminal
+
+`php -S localhost:5000`
+
+- adresse url
+
+`http://localhost:5000/public/albums.php`
