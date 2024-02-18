@@ -56,8 +56,8 @@ class Album{
             $path = "../data/images/". $this->image;
         if(!file_exists($path))
             $path="../data/images/default.jpg";
-        $html = "<li><a href='albums.php?idAlbum=$this->idAlbum'><img src='".urlencode($path)."'/><p>";
-        $html = $html.$this->titre."<br/>".$this->chanteur->nomMusicien."</p></a></li>";
+        $html = "<li class=album><a href='albums.php?idAlbum=$this->idAlbum'><img src='".urlencode($path)."'/><p>";
+        $html = $html."<span class=titre>".$this->titre."</span><br/>".$this->chanteur->nomMusicien."</p></a></li>";
         return $html;
     }
 

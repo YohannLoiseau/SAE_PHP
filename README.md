@@ -37,3 +37,14 @@
 - Insertion des données
 
 `php cli.php sqlite load-data`
+
+## Prérequis
+
+- information utilisateur (normale)
+
+`nom: aboo  mdp: aboo`
+
+- information utilisateur (admin)
+
+`nom: toto  mdp: toto`
+

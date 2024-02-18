@@ -22,7 +22,7 @@
             include_once 'header.php';
             include_once 'aside.php';
         ?>
-        <main>
+        <main id='page-admin'>
             <h1>Gérer Les Albums</h1>
             <h2>Les Albums</h2>
             <table>
