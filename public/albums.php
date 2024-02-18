@@ -37,7 +37,7 @@
                 
 
                 
-                $html.='<h2>Les Albums</h2>';
+                $html.='<h2>Les Albums';
                 if(!empty($_GET['nomGenre'])){
                     $html.=" de genre ".$_GET['nomGenre'];
                     $albums = array_filter(
@@ -57,7 +57,7 @@
                     fn($a) => str_contains(strtoupper($a->titre), strtoupper($_GET['titre'])));
                 }
                 if(count($albums)>0){
-                    $html.="<h2>Nombre d'albums: ".count($albums)."</h2><ul id='albums'>";
+                    $html.="</h2><h2>Nombre d'albums: ".count($albums)."</h2><ul id='albums'>";
                 }else{
                     $html.="<h2>Aucun résultat trouvé</h2><ul>";
                 }
